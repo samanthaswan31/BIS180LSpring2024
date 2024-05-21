@@ -1,0 +1,53 @@
+---
+title: "lab1_unix"
+output: html_document
+date: "2024-05-21"
+---
+
+Basic unix form:
+```
+command argument(s)
+```
+
+To find the manual for a command/argument options:
+```
+man command
+```
+
+History gives history of entire commands during session
+```
+history
+```
+
+Environment/shell variables: defined by shell (ex USER = shswan), some programs use for configuration
+Examine contents:
+```
+printenv USER
+```
+
+Define own variable:
+```
+mycolor="blue"
+```
+
+Refer to variable with $:
+```
+echo $mycolor
+```
+
+File system: where files are stored
+```
+df #how much more free space in file system
+df -h #more easily readable
+du -h #disk usage/how much space each thing uses
+```
+
+
+
+
+
+
+
+
+
+
