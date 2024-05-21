@@ -3,6 +3,15 @@ title: "lab1_unix"
 output: html_document
 date: "2024-05-21"
 ---
+Unix standard naming conventions:
+Files:
+*all lowercase letters
+*no spaces in name
+*extension/file type
+Directories:
+*Begin with capital letter
+
+"*" serves as wildcard, fills missing letters of arguments
 
 Basic unix form:
 ```
@@ -19,7 +28,7 @@ History gives history of entire commands during session
 history
 ```
 
-Environment/shell variables: defined by shell (ex USER = shswan), some programs use for configuration
+Environment/shell variables: defined by shell (ex USER = shswan or HOME = location of home directory), some programs use for configuration
 Examine contents:
 ```
 printenv USER
@@ -41,6 +50,134 @@ df #how much more free space in file system
 df -h #more easily readable
 du -h #disk usage/how much space each thing uses
 ```
+
+Creating files:
+```
+touch file1 #creates empty file1 OR changes mod time if file1 already exists
+```
+
+OR
+
+```
+file2 > content #content now stored in file2/close once done adding content with control-D
+```
+
+Viewing files:
+
+```
+cat file2 #displays entire content
+```
+
+OR
+
+```
+head file2 #displays first 10 lines
+head -1 file2 #displays first line
+tail file2 #displays last 10 lines
+```
+
+OR
+
+```
+more file2 #see file on terminal page at a time
+less file2
+```
+Spacebar advances page, q quits
+
+Edit or View with Nano (terminal based editor):
+```
+nano file2
+```
+Arrow keys to move cursor, save ^O, exit ^X
+
+Navigating Directories:
+```
+pwd #print working directory
+```
+Current directory = "."
+
+```
+ls #lists current directory
+ls . #returns files in current wd or specified directory
+ls -F #adds character representing file type
+ls .. #lists parent directory
+```
+
+Use absolute path to list contents versus relative path
+```
+ls /usr/bin #uses absolute path to list contents of usr/bin
+ls .. #example of relative path
+```
+
+Change working directory
+```
+cd #returns wd to root
+cd /absolute path #changes wd to location specified
+```
+
+Example of creating files with directories
+```
+touch /home/user/file3 #creates file3 in specified location
+cd ~/Documents #sets wd to Documents
+pwd #prints wd
+ls #returns files in wd
+touch ../file4 #creates file4 in relative path
+```
+
+Moving and Renaming Files:
+Create a directory:
+```
+mkdir Directory #creates empty Directory
+```
+
+Move files:
+```
+mv file1 Directory #move file1 to Directory
+mv file1 file2 file3 Directory #move file1-3 to Directory
+```
+If final argument is not a directory, mv renames the file
+
+Copying and Aliasing:
+Copying:
+```
+cp Directory/file1 . #copies file1 to home directory
+```
+
+Aliasing:
+Alias = another name for file, useful for organization
+```
+ln -s Directory/file1 ./newname #link file1 to alias newname
+ls -l newname #see that newname is alias for file1
+```
+
+Deleting Files:
+```
+rm Directory/file1 #removes file1 from Directory forever
+```
+
+File Permissions: 
+rwx for user, group, and public (in octal format)
+Read
+Write
+Execute- programs/directories need executable permission for access
+
+List permissions:
+```
+ls -lF file1  #lists permissions for file1
+```
+Number of links (#), owner (user), group (user), file sizes (# bytes), date, file name
+
+Change permissions:
+```
+chmod u-x file1 #change user (u) to remove (- or add +) execute (x) permission from file1
+chmod 777 file2 #turn on all permissions for everyone
+```
+First character gives file type: "-" = file, "d" = directory, "I" = alias
+rwx symbols = rwx permissions for user, group, public
+raw data 	-r--r--r-- 	444 	anyone can read, nobody can write
+private 	-rw------- 	600 	I can read/write, others nothing
+shared 	-rw-r--r-- 	644 	I can read/write, group/public can read
+shared 	-rw-rw-r-- 	664 	We can read/write, public can read
 
 
 
