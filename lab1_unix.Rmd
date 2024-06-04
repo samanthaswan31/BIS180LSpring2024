@@ -179,12 +179,62 @@ private 	-rw------- 	600 	I can read/write, others nothing
 shared 	-rw-r--r-- 	644 	I can read/write, group/public can read
 shared 	-rw-rw-r-- 	664 	We can read/write, public can read
 
+Working with Text Files:
+Binary files = generally for machine consumption
+Text files = generally for human consumption
+**AVOID interchanging files between Linux/Mac/Windows**
 
+See size of file:
+```
+ls -lh ~/data
+```
 
+Gunzipping files to compress/decompress:
+```
+gunzip data.gz #compresses data into .gz form
+gunzip -c data.gz | head #gunzips and shows first lines
+gunzip -c data.gz | less #can page through file
+```
 
+Finding patterns within files:
+```
+gunzip -c data.gz | grep ">" #search for > in file
+gunzip -c data.gz | less #hit "/" then enter character then return (keep hitting / and return)
+gunzip -c data.gz | grep ">" > data.txt #redirects output to file
+```
 
+Using GNU zip and GNU unzip:
+```
+gzip data.txt #compresses file
+ls -l
 
+gunzip data.txt #decompresses file
+ls -l
 
+gzip -k data.txt #compresses file but also keeps original
+ls 0l
+```
+Gunzipping reduces to 25-50% of original size
 
+Tar balls:
+Easy way to send multiple files
+Contains archives = single files that contain multiple files
+```
+tar -c -f archivename.tar directory #converts directory files into archivename.tar
+```
+Should compress tar balls to save space (-z will do this)
+To decompress tar ball swap -c to -x
 
+Processes:
 
+Top: helps monitor health of computer
+```
+top
+htop #preferred/new variant
+```
+Top is equivalent to Activity Monitor in Mac/Task Manager in Windows
+
+Foreground: get process to pick up where it left off
+```
+fg
+```
