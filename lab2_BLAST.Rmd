@@ -1,0 +1,33 @@
+---
+title: "lab2_BLAST"
+output: html_document
+date: "2024-06-04"
+---
+Refseq files = reference sequences, all complete genomic viral sequences
+Patientseq files = patient sequences
+
+Download files from web:
+```
+weget https://webaddress.com/downloads
+```
+
+First step of header lines in a refseq file:
+```
+gunzip -c patientseq.txt.gz | head -1
+```
+
+Search for a term within a file:
+Example with grep = how many viruses come from a domesticated cat
+```
+zgrep -c "Felis catus" refseq.txt.gz
+```
+
+Example with cut = how many viruses were isolated in the U.S.
+```
+cut -f 5 -d "|" | zgrep -c "United States" refseq.txt.gz
+```
+f = select only these fields and print any line with no delimiter character
+d = delimiter
+f/d are necessary as there are
+
+
