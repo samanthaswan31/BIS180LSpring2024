@@ -1,5 +1,5 @@
 ---
-title: "lab2_BLAST"
+title: "BLAST 1: Building a Database, Running BLAST"
 output: html_document
 date: "2024-06-04"
 ---

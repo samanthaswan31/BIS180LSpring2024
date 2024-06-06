@@ -1,0 +1,73 @@
+---
+title: "For Loops"
+output: html_document
+date: "2024-06-04"
+---
+For loop is a method of iterating over series of values and performing an operation on each value
+
+**Linux For Loops**
+First create list to iterate over:
+```
+example_list = "example1 example2 example3" #creates variable example_list
+```
+
+Refer to variable after defined with a $ in front, optional curly brackets
+```
+echo "${example_list} #prints contents of example_list
+```
+
+Template for for loops:
+```
+for example in ${example_list} 
+  do
+    echo "${example}" #command of choice
+  done
+```
+
+Example: make list plural
+```
+for example in ${example_list} 
+  do
+    echo "${example}s" #placement of brackets distinguishes
+  done
+```
+
+**Interacting with Files**
+Common use for for loops is processing a list of files
+
+Example of processing a list of files:
+```
+for file in ${myfiles}
+  do
+    cat ${file} #prints contents of all files in directory myfiles
+  done
+```
+
+Example of processing list of files: file file1.txt contains: text
+```
+for file in $myfiles
+  do
+    echo "file ${file} contains:" $(cat ${file})
+  done
+```
+
+**Nested For Loops**
+Create dataset for example:
+```
+days="mon tue wed thur fri"
+hours="09 10 11 12 01 02 03 04 05"
+```
+
+
+If want a loop within a loop:
+```
+for day in $days #first for loop goes through days
+  do
+    for hour in $hours #second for loop goes through hours
+      do
+        echo "It is ${hour}:00 on ${day}" #echo desired statement
+    done
+  echo " "
+done
+```
+It is time:00 on day (9-5 on each day of the days)
