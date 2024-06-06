@@ -1,0 +1,74 @@
+---
+title: "lab2_BLAST"
+output: html_document
+date: "2024-06-04"
+---
+Refseq files = reference sequences, all complete genomic viral sequences, NCBI dataset in this example
+Patientseq files = patient sequences
+
+Download files from web:
+```
+weget https://webaddress.com/downloads
+```
+
+First step of header lines in a refseq file:
+```
+gunzip -c patientseq.txt.gz | head -1
+```
+
+Search for a term within a file:
+Example with grep = how many viruses come from a domesticated cat
+```
+zgrep -c "Felis catus" refseq.txt.gz
+```
+
+Example with cut = how many viruses were isolated in the U.S.
+```
+cut -f 5 -d "|" | zgrep -c "United States" refseq.txt.gz
+```
+f = select only these fields and print any line with no delimiter character
+d = delimiter
+f/d are necessary to eliminate the header lines
+
+Using grep to get useful information from files 
+```
+grep -c ">" patientseq.txt.gz #counts number of lines with > which indicate start of new sequence
+```
+
+```
+grep -v ">" refseq.txt | wc #subtract out number of lines to account for characters at end, counts number of characters once > lines excluded
+```
+
+BLAST:
+*Requires database of words for each sequence within reference
+*Only needs to be done once
+
+Generate database:
+```
+makeblastdb
+makeblastdb -in ncbi_virus_110119_2.txt -dbtype nucl 
+```
+File must be gunzipped
+
+Run BLAST, useful for single query, with run time included:
+```
+time blastn -db ../input/ncbi_virus_110119_2.txt -query ../input/patient_viral.txt -evalue 1e-3 > blastout.default #time optional, evalue option limits returned results, assumes in output directory when command is issued
+```
+Each query sequence returns list of hits followed by alignments for top hits
+Useful for single query, not as useful for summarizing results of multiple query sequences
+
+Run BLAST, useful for multiple queries:
+```
+time blastn  -db ../input/ncbi_virus_110119_2.txt -query ../input/patient_viral.txt -evalue 1e-3 -outfmt '7 std stitle' > blastout.default.tsv #outfmt creates table, add stitle to std fields
+```
+Now have each "hit" summarized by single line (-outfmt 7)
+Modify table by adding subject title (stitle) to standard (std) fields
+
+Run BLAST, limit subject sequences returned per query:
+```
+time blastn  -db ../input/ncbi_virus_110119_2.txt -query ../input/patient_viral.txt -evalue 1e-3 -outfmt '7 std stitle' -max_target_seqs 2 > blastout.2subjects #limits hits to 2
+```
+May not be the absolute best hits due to BLAST algorithim, but similar
+[Explanation for BLAST Hits Returned](https://blastedbio.blogspot.com/2018/11/blast-max-alignment-limits-repartee-two.html)
+
+
