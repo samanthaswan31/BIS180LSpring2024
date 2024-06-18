@@ -1,0 +1,77 @@
+---
+title: "BLAST 2: Using For Loops to Automate BLAST"
+output: html_document
+date: "2024-06-04"
+---
+
+**Word Size**
+
+Seeding parameters are an important control for the speed of BLAST
+
+-blastp = word size, score threshold determines seeds
+-blastn = word size, requires perfect match between query/subject to seed search
+-blastn is optimized to find similar sequences with megablast algorithim with default word size 28
+More traditional blastn searches use word size 11
+
+Increased word size = increase speed, decrease sensitivity
+
+**For Loops with BASH**
+
+Template:
+```
+for WS in {9..19..2} 28
+  do
+    echo "Starting blastn with word size $WS"
+    #blastn code
+  done
+```
+
+Continued Example: BLAST in For Loop with Structured File Name Output 
+```
+for WS in {9..19..2} 28
+  do
+    echo "Starting blastn with word size $WS"
+time blastn -db ../input/ncbi_virus_110119_2.txt -query ../input/seq_h -evalue 1e-3 -word_size $WS -max_target_seqs 10000 -outfmt '7 std stitle' > ../output/blastout.$WS #evalue cutoff of 1e-3, max_target_seqs to 10000 to see how many hits there are
+  done
+```
+Each loop saves into separate file that includes word size in name
+
+**Counting Number of Unique Hits**
+
+Can use cut to extract sequence ID, sort, then remove duplicates with uniq
+Example of cut:
+```
+cut -f 2 -s blastout.WS9.tsv | sort | uniq | head #gives the second field with only delimited lines
+```
+
+Can use this to count number of unique hits
+Example of counts:
+```
+cut -f 2 -s blastout.9 | wc -l #counts newline counts/unique hits
+```
+
+Count number of unique hits in a for loop:
+```
+for WS in {9..19..2} 28
+do
+cut -f 2 -s blastout.${WS}| wc -l
+done
+```
+
+**Tailoring Blastn**
+Blastn has four types:  
+Megablast = very similar sequences (sequencing errors)
+Dc-megablast = for inter-species comparisons  
+Blastn = traditional for inter-species  
+Blastn-short = for sequences <30 nucleotides  
+
+Changes search parameters (word size, gap opening, extension penalties)  
+Specify with -task blastntype  
+Default is megablast (not as good for broader spectrum)  
+
+For loop 
+
+
+
+
+
